@@ -7,6 +7,7 @@ class platforms:
         self.platform_rect = self.platform.get_rect()
         self.platform_rect.x = x
         self.platform_rect.y = y
-        
+    
+    
     def update(self,screen):
         screen.blit(self.platform,self.platform_rect)
