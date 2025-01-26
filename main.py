@@ -7,12 +7,17 @@ from pygame.locals import QUIT
 pygame.init()
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Hello World!')
-'''      _
+'''  
+     Tall hat
+         _
         | |
         | |
         | |
         | |
-      __|_|__
+
+   Traffic cone 
+         ^
+      __/_\__
      >(^o.o^)<
        =>*<=  
        
@@ -93,36 +98,25 @@ def lv3():
 onPlatform = False
 
 
-def catPlatform():
-     global velocity, isJump, isFalling 
-     for platform in platforms:
-          if wisp_rect.colliderect(platform):
-               velocity = 0
-               isJump = False
-               isFalling = False
-          else:
-               isFalling  = True
+
           
 
-
-     
 def jump():
-     global velocity, gravity
+     global velocity, gravity, isJump
      velocity += gravity  # subtract velocity from gravity to slow down velocity
      wisp_rect.y  -= velocity  # makes us go up by velocity
 
 
-     if wisp_rect.colliderect(grass_rect):
-          velocity = 0
-          gravity = 0
-          
-     #catPlatform()
-
+     for platform in platform_list:
+          if platform.platform_rect.colliderect(wisp_rect):
+               velocity = 0 
+               isJump = False
+               gravity = 0 
 
 startingTime = time.time()  # starting time for the walking animation
 i = 0
 
-
+# this is for the walking animation of your character
 def walk():
      global i, startingTime, wisp
      currentTime = time.time()
@@ -140,7 +134,7 @@ def walk():
      if i > 3:
           i = 0
 
-
+# this is for backwards walking animation
 def revWalk():
      global i, startingTime, wisp
      currentTime = time.time()
@@ -197,8 +191,10 @@ while True:
      screen.blit(grass, grass_rect)
      screen.blit(wisp, wisp_rect)
 
+     # updating platforms 
      for platform in platform_list:
           platform.update(screen)
+     # updating enemies
      for enemies in enemies_list:
           enemies.update(screen, wisp_rect, hp)
 
