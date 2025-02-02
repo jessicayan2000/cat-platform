@@ -102,16 +102,18 @@ onPlatform = False
           
 
 def jump():
-     global velocity, gravity, isJump
+     global velocity, gravity,grass_rect
      velocity += gravity  # subtract velocity from gravity to slow down velocity
      wisp_rect.y  -= velocity  # makes us go up by velocity
+     
+     if wisp_rect.colliderect(grass_rect):
+          velocity = 0
+          gravity = 0 
+          grass_rect.y = 250
+     if wisp_rect.collidedict(platforms) and velocity >=0:
+          velocity = 0 
 
-
-     for platform in platform_list:
-          if platform.platform_rect.colliderect(wisp_rect):
-               velocity = 0 
-               isJump = False
-               gravity = 0 
+    
 
 startingTime = time.time()  # starting time for the walking animation
 i = 0
@@ -174,9 +176,9 @@ while True:
           wisp_rect.x += 5
           revWalk()
 
-     if key[pygame.K_SPACE] and currentTime - startTime >= 4:
-          gravity = -1
-          velocity = 20
+     if key[pygame.K_SPACE] and wisp_rect.colliderect(grass_rect) or key[pygame.K_SPACE] and (velocity >= -4 and velocity <= 4):
+          gravity = -2
+          velocity = 15
           wisp_rect.y -= 10
           startTime = time.time()
 
