@@ -102,7 +102,7 @@ onPlatform = False
           
 
 def jump():
-     global velocity, gravity,grass_rect
+     global velocity, gravity,grass_rect, jumps
      velocity += gravity  # subtract velocity from gravity to slow down velocity
      wisp_rect.y  -= velocity  # makes us go up by velocity
      
@@ -110,8 +110,11 @@ def jump():
           velocity = 0
           gravity = 0 
           grass_rect.y = 250
-     if wisp_rect.collidedict(platforms) and velocity >=0:
+          jumps = 3 
+     if -1 != wisp_rect.collidelist(platform_list) and velocity >=0:
           velocity = 0 
+          
+          
 
     
 
@@ -158,6 +161,7 @@ def revWalk():
 
 
 # this is set to zero just so you can jump automatically when you start the game
+jumps= 3
 startTime = 0
 hp = 4000
 while True:
@@ -176,11 +180,13 @@ while True:
           wisp_rect.x += 5
           revWalk()
 
-     if key[pygame.K_SPACE] and wisp_rect.colliderect(grass_rect) or key[pygame.K_SPACE] and (velocity >= -4 and velocity <= 4):
-          gravity = -2
-          velocity = 15
-          wisp_rect.y -= 10
-          startTime = time.time()
+     if key[pygame.K_SPACE] and jumps:
+          if (wisp_rect.colliderect(grass_rect) or  (velocity >= -4 and velocity <= 4)) or currentTime-startTime >= 16:
+               gravity = -2
+               velocity = 15
+               wisp_rect.y -= 10
+               startTime = time.time()
+               jumps-=1
 
 
      for event in pygame.event.get():
