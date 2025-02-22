@@ -36,20 +36,24 @@ class enemies:
     else:
       self.green_rect.x -= 3
 
-  def health(self, wisp_rect, hp):
+  def health(self, wisp_rect):
     currentTime = time.time()
     if wisp_rect.colliderect(self.green_rect):
       if currentTime - self.startTime >= 5:
-        hp -= 10
+        # hp -= 10
         wisp_rect.x -= 20
         self.startTime = time.time()
-        print(hp)
+        return True
+    return False
   
-  def update(self,screen, wisp_rect, hp):
+  def update(self,screen, wisp_rect):
     if self.switch:
         screen.blit(self.green,self.green_rect)
     else:
         screen.blit(self.green2, self.green_rect)
         
     self.movement()
-    self.health(wisp_rect, hp)
+    if self.health(wisp_rect):
+      return True
+    else:
+      return False

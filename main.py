@@ -8,16 +8,19 @@ pygame.init()
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Hello World!')
 '''  
+
+
+   Traffic cone 
+         ^
+
+
      Tall hat
          _
         | |
         | |
         | |
         | |
-
-   Traffic cone 
-         ^
-      __/_\__
+      __|_|__
      >(^o.o^)<
        =>*<=  
        
@@ -58,6 +61,8 @@ platform3 = platforms(180, 70)
 platform4 = platforms(270,150)
 platform5 = platforms(190, 60)
 platform6 = platforms(15, 60)
+
+platforms = [platform1, platform2, platform3, platform4, platform5, platform6]
 
      #Enemies:
 enemy1 = enemies(30,130,1)
@@ -187,7 +192,7 @@ while True:
                wisp_rect.y -= 10
                startTime = time.time()
                jumps-=1
-
+               
 
      for event in pygame.event.get():
           if event.type == QUIT:
@@ -204,7 +209,9 @@ while True:
           platform.update(screen)
      # updating enemies
      for enemies in enemies_list:
-          enemies.update(screen, wisp_rect, hp)
+          if enemies.update(screen, wisp_rect):
+               hp -= 10
 
+     print(hp)
      clock.tick(15)
      pygame.display.update()
