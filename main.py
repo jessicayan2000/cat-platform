@@ -1,4 +1,4 @@
-import time
+import time, os
 import pygame, sys
 from enemy import enemies
 from platform_1 import platforms
@@ -78,7 +78,7 @@ def lv1():
      enemies_list.clear()
      enemies_list.append(enemy1)
 
-lv1()
+
 
 
 # LEVEL 2 platforms
@@ -96,8 +96,9 @@ def lv2():
 def lv3():
      platform_list.append(platform5)
      platform_list.append(platform1)
+     platform_list.append(platform4)
 
-
+lv2()
 #-------------------
 
 onPlatform = False
@@ -116,8 +117,9 @@ def jump():
           gravity = 0 
           grass_rect.y = 250
           jumps = 3 
-     if -1 != wisp_rect.collidelist(platform_list) and velocity >=0:
-          velocity = 0 
+
+          
+          
           
           
 
@@ -162,9 +164,7 @@ def revWalk():
 
      if i > 3:
           i = 0
-
-
-
+          
 # this is set to zero just so you can jump automatically when you start the game
 jumps= 3
 startTime = 0
@@ -188,7 +188,7 @@ while True:
      if key[pygame.K_SPACE] and jumps:
           if (wisp_rect.colliderect(grass_rect) or  (velocity >= -4 and velocity <= 4)) or currentTime-startTime >= 16:
                gravity = -2
-               velocity = 15
+               velocity = 30
                wisp_rect.y -= 10
                startTime = time.time()
                jumps-=1
@@ -207,11 +207,21 @@ while True:
      # updating platforms 
      for platform in platform_list:
           platform.update(screen)
+     
+     
+     for platforms in platform_list:
+          if wisp_rect.colliderect(platforms) and velocity <=0:
+               velocity = 0
+               gravity = 0
+               jumps = 3
+          elif wisp_rect.colliderect(platforms) == False and velocity == 0 and (wisp_rect.colliderect(grass_rect) == False):
+               gravity = -2 
+
      # updating enemies
      for enemies in enemies_list:
           if enemies.update(screen, wisp_rect):
                hp -= 10
-
-     print(hp)
+     
+   
      clock.tick(15)
      pygame.display.update()

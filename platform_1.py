@@ -10,3 +10,5 @@ class platforms:
     
     def update(self,screen):
         screen.blit(self.platform,self.rect)
+        
+        
