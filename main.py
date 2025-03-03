@@ -62,7 +62,7 @@ platform4 = platforms(270,150)
 platform5 = platforms(190, 60)
 platform6 = platforms(15, 60)
 
-platforms = [platform1, platform2, platform3, platform4, platform5, platform6]
+platforms = [platform1, platform2, platform3, platform4, platform5, platform6, grass_rect]
 
      #Enemies:
 enemy1 = enemies(30,130,1)
@@ -75,6 +75,7 @@ def lv1():
      platform_list.append(platform1)
      platform_list.append(platform2)
      platform_list.append(platform3)
+     platform_list.append(grass_rect)
      enemies_list.clear()
      enemies_list.append(enemy1)
 
@@ -98,7 +99,7 @@ def lv3():
      platform_list.append(platform1)
      platform_list.append(platform4)
 
-lv2()
+lv1()
 #-------------------
 
 onPlatform = False
@@ -112,12 +113,16 @@ def jump():
      velocity += gravity  # subtract velocity from gravity to slow down velocity
      wisp_rect.y  -= velocity  # makes us go up by velocity
      
-     if wisp_rect.colliderect(grass_rect):
-          velocity = 0
-          gravity = 0 
-          grass_rect.y = 250
-          jumps = 3 
+     for platform in platform_list:
+          if wisp_rect.colliderect(platform) and velocity <= 0:
+               velocity = 0
+               gravity = 0 
+               grass_rect.y = 250
+               jumps = 3
+             
 
+
+          
           
           
           
@@ -169,6 +174,7 @@ def revWalk():
 jumps= 3
 startTime = 0
 hp = 4000
+collide = False
 while True:
      if isJump:
           jump()
@@ -176,6 +182,8 @@ while True:
      screen.fill("gray")
      currentTime = time.time()
 
+     if wisp_rect.x <= 0 or wisp_rect.x >= 370:
+          lv2()
 
      key = pygame.key.get_pressed()
      if key[pygame.K_a]:
@@ -205,18 +213,18 @@ while True:
      screen.blit(wisp, wisp_rect)
 
      # updating platforms 
-     for platform in platform_list:
-          platform.update(screen)
+     for platform in range(len(platform_list) - 1):
+          platform_list[platform].update(screen)
+          if wisp_rect.colliderect(platform_list[platform]) == True and velocity == 0 and (wisp_rect.colliderect(grass_rect) == False):
+               collide = True
+          else:
+               collide = False
      
      
-     for platforms in platform_list:
-          if wisp_rect.colliderect(platforms) and velocity <=0:
-               velocity = 0
-               gravity = 0
-               jumps = 3
-          elif wisp_rect.colliderect(platforms) == False and velocity == 0 and (wisp_rect.colliderect(grass_rect) == False):
-               gravity = -2 
-
+          
+     
+     print("Current count is: " + str(collide))
+    
      # updating enemies
      for enemies in enemies_list:
           if enemies.update(screen, wisp_rect):
