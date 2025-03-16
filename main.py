@@ -95,16 +95,16 @@ def lv2():
 # LEVEL 3 platforms
 #-------------------
 def lv3():
+     platform_list.clear()
      platform_list.append(platform5)
      platform_list.append(platform1)
      platform_list.append(platform4)
 
-lv1()
 #-------------------
 
 onPlatform = False
 
-
+levels = [lv1(), lv2(), lv3()]
 
           
 
@@ -175,15 +175,30 @@ jumps= 3
 startTime = 0
 hp = 4000
 collide = False
+currentlevel = 1
 while True:
+     print(currentlevel)
      if isJump:
           jump()
      
      screen.fill("gray")
      currentTime = time.time()
+     
+     # if you go to the right, then go to next level
+     if wisp_rect.x >= 370 and currentlevel < 3:
+          currentlevel += 1
+          wisp_rect.x = 0
+     # if you go to the left, then go to the previous level
+     elif wisp_rect.x <= 0 and currentlevel > 1:
+          currentlevel -= 1
+          wisp_rect.x = 370
 
-     if wisp_rect.x <= 0 or wisp_rect.x >= 370:
+     if currentlevel == 1:
+          lv1()
+     if currentlevel == 2:
           lv2()
+     if currentlevel == 3:
+          lv3()
 
      key = pygame.key.get_pressed()
      if key[pygame.K_a]:
@@ -220,11 +235,6 @@ while True:
           else:
                collide = False
      
-     
-          
-     
-     print("Current count is: " + str(collide))
-    
      # updating enemies
      for enemies in enemies_list:
           if enemies.update(screen, wisp_rect):
