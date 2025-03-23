@@ -90,7 +90,8 @@ def lv2():
      platform_list.append(platform4)
      platform_list.append(platform5)
      platform_list.append(platform6)
-
+     platform_list.append(grass_rect)
+     enemies_list.clear()
 
 # LEVEL 3 platforms
 #-------------------
@@ -99,7 +100,9 @@ def lv3():
      platform_list.append(platform5)
      platform_list.append(platform1)
      platform_list.append(platform4)
-
+     platform_list.append(grass_rect)
+     enemies_list.clear()
+     enemies_list.append(enemy1)
 #-------------------
 
 onPlatform = False
@@ -116,9 +119,14 @@ def jump():
      for platform in platform_list:
           if wisp_rect.colliderect(platform) and velocity <= 0:
                velocity = 0
-               gravity = 0 
+               velocity -= gravity
                grass_rect.y = 250
                jumps = 3
+          
+     
+     
+               
+               
              
 
 
@@ -195,20 +203,24 @@ while True:
 
      if currentlevel == 1:
           lv1()
+          if wisp_rect.x <= 0:
+               wisp_rect.x = 10
      if currentlevel == 2:
           lv2()
      if currentlevel == 3:
           lv3()
+          if wisp_rect.x >=370:
+               wisp_rect.x = 360
 
      key = pygame.key.get_pressed()
-     if key[pygame.K_a]:
+     if key[pygame.K_a] or key[pygame.K_LEFT]:
           wisp_rect.x -= 5
           walk()
-     if key[pygame.K_d]:
+     if key[pygame.K_d] or key[pygame.K_RIGHT]:
           wisp_rect.x += 5
           revWalk()
 
-     if key[pygame.K_SPACE] and jumps:
+     if (key[pygame.K_SPACE] or key[pygame.K_UP] )and jumps:
           if (wisp_rect.colliderect(grass_rect) or  (velocity >= -4 and velocity <= 4)) or currentTime-startTime >= 16:
                gravity = -2
                velocity = 30
