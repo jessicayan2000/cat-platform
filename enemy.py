@@ -16,14 +16,11 @@ class enemies:
     self.green2 = pygame.transform.flip(self.green, True, False)
     self.switch = True
     self.level = lv
-    self.startpoint = 0
-    self.stoppoint = 0 
+    self.startpoint = self.green_rect.x + 20
+    self.stoppoint = self.green_rect.x - 20
     self.startTime = time.time()
   def movement(self):
-    if self.level==1:
-      self.startpoint = 50
-      self.stoppoint = 10
-
+    
 
     if self.green_rect.x >= self.startpoint:
       self.switch = False

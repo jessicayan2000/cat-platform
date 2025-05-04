@@ -66,7 +66,7 @@ platforms = [platform1, platform2, platform3, platform4, platform5, platform6, g
 
      #Enemies:
 enemy1 = enemies(30,130,1)
-
+enemy2 = enemies(100,40,2)
 
 # LEVEL 1 Platforms
 #------------------
@@ -92,6 +92,7 @@ def lv2():
      platform_list.append(platform6)
      platform_list.append(grass_rect)
      enemies_list.clear()
+     enemies_list.append(enemy2)
 
 # LEVEL 3 platforms
 #-------------------
@@ -110,7 +111,7 @@ onPlatform = False
 levels = [lv1(), lv2(), lv3()]
 
           
-
+          
 def jump():
      global velocity, gravity,grass_rect, jumps
      velocity += gravity  # subtract velocity from gravity to slow down velocity
@@ -122,6 +123,11 @@ def jump():
                velocity -= gravity
                grass_rect.y = 250
                jumps = 3
+               if wisp_rect.colliderect(grass_rect):
+                    wisp_rect.y = 210
+     if velocity <= -30:
+          velocity = -30
+     
           
      
      
@@ -150,7 +156,7 @@ def walk():
      if i != 0:
           wisp = pygame.transform.scale(wisp, (50, 50))
      else:
-          wisp = pygame.transform.scale(wisp, (50, 65))
+          wisp = pygame.transform.scale(wisp, (50, 50))
 
      if currentTime - startingTime >= 0.2:
           i += 1
@@ -169,7 +175,7 @@ def revWalk():
      if i != 0:
           wisp = pygame.transform.scale(wisp, (50, 50))
      else:
-          wisp = pygame.transform.scale(wisp, (50, 65))
+          wisp = pygame.transform.scale(wisp, (50, 50))
  
      if currentTime - startingTime >= 0.2:
           i += 1
@@ -185,7 +191,7 @@ hp = 4000
 collide = False
 currentlevel = 1
 while True:
-     print(currentlevel)
+     print(wisp_rect.y)
      if isJump:
           jump()
      
