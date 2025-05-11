@@ -29,7 +29,7 @@ pygame.display.set_caption('Hello World!')
         I   
 '''
 wisp = pygame.image.load(
-    "images/walking/catwalk0.png").convert_alpha()  # image of cat
+    "images/walking/orange_cat1.png").convert_alpha()  # image of cat
 wisp = pygame.transform.scale(wisp, (50, 50))  # how big cat is
 wisp_rect = wisp.get_rect()  # this creates rectangle/hitbox around the cat
 wisp_rect.x = 200
@@ -148,15 +148,15 @@ startingTime = time.time()  # starting time for the walking animation
 i = 0
 
 # this is for the walking animation of your character
-def walk():
+def revWalk():
      global i, startingTime, wisp
      currentTime = time.time()
-     walking = ["catwalk0.png", "catwalk1.png", "catwalk2.png", "catwalk3.png"]
+     walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
      wisp = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
      if i != 0:
-          wisp = pygame.transform.scale(wisp, (50, 50))
+          wisp = pygame.transform.scale(wisp, (45, 45))
      else:
-          wisp = pygame.transform.scale(wisp, (50, 50))
+          wisp = pygame.transform.scale(wisp, (45, 45))
 
      if currentTime - startingTime >= 0.2:
           i += 1
@@ -166,16 +166,16 @@ def walk():
           i = 0
 
 # this is for backwards walking animation
-def revWalk():
+def walk():
      global i, startingTime, wisp
      currentTime = time.time()
-     walking = ["catwalk0.png", "catwalk1.png", "catwalk2.png", "catwalk3.png"]
+     walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
      wisp = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
      wisp = pygame.transform.flip(wisp, True, False)
      if i != 0:
-          wisp = pygame.transform.scale(wisp, (50, 50))
+          wisp = pygame.transform.scale(wisp, (45, 45))
      else:
-          wisp = pygame.transform.scale(wisp, (50, 50))
+          wisp = pygame.transform.scale(wisp, (45, 45))
  
      if currentTime - startingTime >= 0.2:
           i += 1
