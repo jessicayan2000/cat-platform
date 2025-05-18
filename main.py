@@ -191,7 +191,7 @@ hp = 4000
 collide = False
 currentlevel = 1
 while True:
-     print(wisp_rect.y)
+     print(hp)
      if isJump:
           jump()
      
