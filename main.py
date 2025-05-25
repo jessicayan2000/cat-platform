@@ -3,7 +3,7 @@ import pygame, sys
 from enemy import enemies
 from platform_1 import platforms
 from pygame.locals import QUIT
-
+from health import health
 pygame.init()
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Hello World!')
@@ -35,6 +35,8 @@ wisp_rect = wisp.get_rect()  # this creates rectangle/hitbox around the cat
 wisp_rect.x = 200
 wisp_rect.y = 210
 
+
+
 tree = pygame.image.load("images/mondstatTree.png")
 tree = pygame.transform.scale(tree, (400, 300))
 grass = pygame.image.load("images/grass_block.png")
@@ -47,7 +49,7 @@ gravity = 0
 velocity = 0
 isJump = True
 
-
+health_bar1 = health()
 enemies_list = []
 platform_list = []
 #      LEVELS
@@ -184,6 +186,7 @@ def walk():
      if i > 3:
           i = 0
           
+
 # this is set to zero just so you can jump automatically when you start the game
 jumps= 3
 startTime = 0
@@ -244,7 +247,9 @@ while True:
      screen.blit(tree, (0, 0))
      screen.blit(grass, grass_rect)
      screen.blit(wisp, wisp_rect)
-
+     
+     health_bar1.update(screen) 
+     
      # updating platforms 
      for platform in range(len(platform_list) - 1):
           platform_list[platform].update(screen)
