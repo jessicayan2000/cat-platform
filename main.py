@@ -27,6 +27,12 @@ pygame.display.set_caption('Hello World!')
         I
 <=======o----
         I   
+        
+     
+  /___\            
+>(^o.o^)<        
+        
+        
 '''
 wisp = pygame.image.load(
     "images/walking/orange_cat1.png").convert_alpha()  # image of cat
@@ -182,11 +188,12 @@ def walk():
      if currentTime - startingTime >= 0.2:
           i += 1
           startingTime = time.time()
+          
 
      if i > 3:
           i = 0
           
-
+healthTime = time.time() 
 # this is set to zero just so you can jump automatically when you start the game
 jumps= 3
 startTime = 0
@@ -194,7 +201,7 @@ hp = 4000
 collide = False
 currentlevel = 1
 while True:
-     print(hp)
+     #print(hp)
      if isJump:
           jump()
      
@@ -243,6 +250,9 @@ while True:
                pygame.quit()
                sys.exit()
      
+     if wisp_rect.colliderect(enemy1.green_rect) and currentTime - healthTime >= 5:
+          health_bar1.change_health()
+          healthTime = time.time() 
 
      screen.blit(tree, (0, 0))
      screen.blit(grass, grass_rect)
