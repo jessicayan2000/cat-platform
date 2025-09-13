@@ -20,6 +20,13 @@ pygame.display.set_caption('Hello World!')
         | |
         | |
         | |
+        | |
+        | |
+        | |
+        | |
+        | |
+        | |
+        | |
       __|_|__
      >(^o.o^)<
        =>*<=  
@@ -28,10 +35,10 @@ pygame.display.set_caption('Hello World!')
 <=======o----
         I   
         
-     
-  /___\            
->(^o.o^)<        
-        
+         ^
+       /___\            
+     >(^o.o^)<        
+     Wizard cat        
         
 '''
 wisp = pygame.image.load(
@@ -257,16 +264,20 @@ while True:
      screen.blit(tree, (0, 0))
      screen.blit(grass, grass_rect)
      screen.blit(wisp, wisp_rect)
+     pygame.draw.rect(screen, "yellow", wisp_rect, 5)
      
      health_bar1.update(screen) 
      
      # updating platforms 
      for platform in range(len(platform_list) - 1):
           platform_list[platform].update(screen)
+          pygame.draw.rect(screen, "yellow", platform_list[platform].rect, 5)
           if wisp_rect.colliderect(platform_list[platform]) == True and velocity == 0 and (wisp_rect.colliderect(grass_rect) == False):
-               collide = True
-          else:
-               collide = False
+               if wisp_rect.colliderect(platform_list[platform]) and pygame.sprite.spritecollide(wisp, platform_list[plaform], 0, collide_mask):
+                    collide = True
+                    print("hi")
+               else:
+                    collide = False
      
      # updating enemies
      for enemies in enemies_list:
