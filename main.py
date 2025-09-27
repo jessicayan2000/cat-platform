@@ -4,7 +4,9 @@ from enemy import enemies
 from platform_1 import platforms
 from pygame.locals import QUIT
 from health import health
+from wisp import wisp as w 
 pygame.init()
+w(0,0)
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Hello World!')
 '''  
