@@ -19,10 +19,8 @@ def revWalk():
      currentTime = time.time()
      walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
      self.image = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
-     if i != 0:
-          self.image = pygame.transform.scale(self.image, (45, 45))
-     else:
-          self.image = pygame.transform.scale(self.image, (45, 45))
+     self.image = pygame.transform.scale(self.image, (45, 45))
+     self.rect.x += 5
 
      if currentTime - startingTime >= 0.2:
           i += 1
@@ -38,10 +36,8 @@ def walk():
      walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
      self.image = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
      self.image = pygame.transform.flip(self.image, True, False)
-     if i != 0:
-          self.image = pygame.transform.scale(self.image, (45, 45))
-     else:
-          self.image = pygame.transform.scale(self.image, (45, 45))
+     self.image = pygame.transform.scale(self.image, (45, 45))
+     self.rect.x -= 5
  
      if currentTime - startingTime >= 0.2:
           i += 1

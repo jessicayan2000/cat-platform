@@ -6,7 +6,11 @@ from pygame.locals import QUIT
 from health import health
 from wisp import wisp as w 
 pygame.init()
-w(0,0)
+pygame.mixer.init()
+pygame.mixer.music.load("dummy.mp3")
+pygame.mixer.music.play(-1)
+player = pygame.sprite.GroupSingle()
+player.add(w(0,0))
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Hello World!')
 '''  
@@ -146,18 +150,6 @@ def jump():
           velocity = -30
      
           
-     
-     
-               
-               
-             
-
-
-          
-          
-          
-          
-          
 
     
 
@@ -189,11 +181,8 @@ def walk():
      walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
      wisp = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
      wisp = pygame.transform.flip(wisp, True, False)
-     if i != 0:
-          wisp = pygame.transform.scale(wisp, (45, 45))
-     else:
-          wisp = pygame.transform.scale(wisp, (45, 45))
- 
+     wisp = pygame.transform.scale(wisp, (45, 45))
+     
      if currentTime - startingTime >= 0.2:
           i += 1
           startingTime = time.time()
@@ -239,10 +228,10 @@ while True:
 
      key = pygame.key.get_pressed()
      if key[pygame.K_a] or key[pygame.K_LEFT]:
-          wisp_rect.x -= 5
+          
           walk()
      if key[pygame.K_d] or key[pygame.K_RIGHT]:
-          wisp_rect.x += 5
+          
           revWalk()
 
      if (key[pygame.K_SPACE] or key[pygame.K_UP] )and jumps:
@@ -286,6 +275,7 @@ while True:
           if enemies.update(screen, wisp_rect):
                hp -= 10
      
-   
+     player.draw(screen)
+     player.update()
      clock.tick(15)
      pygame.display.update()
