@@ -6,9 +6,9 @@ from pygame.locals import QUIT
 from health import health
 from wisp import wisp as w 
 pygame.init()
-pygame.mixer.init()
-pygame.mixer.music.load("dummy.mp3")
-pygame.mixer.music.play(-1)
+#pygame.mixer.init()
+#pygame.mixer.music.load("dummy.mp3")
+#pygame.mixer.music.play(-1)
 player = pygame.sprite.GroupSingle()
 player.add(w(0,0))
 screen = pygame.display.set_mode((400, 300))
@@ -229,10 +229,10 @@ while True:
      key = pygame.key.get_pressed()
      if key[pygame.K_a] or key[pygame.K_LEFT]:
           
-          walk()
+          player.sprite.walk()
      if key[pygame.K_d] or key[pygame.K_RIGHT]:
           
-          revWalk()
+          player.sprite.revWalk()
 
      if (key[pygame.K_SPACE] or key[pygame.K_UP] )and jumps:
           if (wisp_rect.colliderect(grass_rect) or  (velocity >= -4 and velocity <= 4)) or currentTime-startTime >= 16:
