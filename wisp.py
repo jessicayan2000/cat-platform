@@ -9,6 +9,7 @@ class wisp(pygame.sprite.Sprite):
         }
         for name, image in self.images.items():
              self.images[name] = pygame.transform.scale(image, (45, 45))
+        self.walking = False
         self.image = self.images["walking1"]  # image of cat
         self.rect = self.image.get_rect()  # this creates rectangle/hitbox around the cat
         self.rect.x = x
@@ -18,35 +19,29 @@ class wisp(pygame.sprite.Sprite):
      def update(self):
           self.t += 1
           images = list(self.images.values())
-          self.image = images[((self.t // 5 ) % 4)]
+          if self.walking:
+               self.image = images[((self.t) % 4)]
+    
 
-         
-
-     def revWalk(self):
-
+     def revWalk(self, currentTime):
+          self.rect.x += 5
           self.walking = True
 
           if currentTime - startingTime >= 0.2:
-               i += 1
+               self.t += 1
                startingTime = time.time()
 
-          if i > 3:
-               i = 0
+          
 
      # this is for backwards walking animation
-     def walk(self):
-
-          walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
-          self.image = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
-          self.image = pygame.transform.flip(self.image, True, False)
-          self.image = pygame.transform.scale(self.image, (45, 45))
+     def walk(self, currentTime):
+          self.walking = True
           self.rect.x -= 5
      
           if currentTime - startingTime >= 0.2:
-               i += 1
+               self.t += 1
                startingTime = time.time()
                
 
-          if i > 3:
-               i = 0
+
 

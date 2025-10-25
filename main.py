@@ -229,10 +229,10 @@ while True:
      key = pygame.key.get_pressed()
      if key[pygame.K_a] or key[pygame.K_LEFT]:
           
-          player.sprite.walk()
+          player.sprite.walk(currentTime)
      if key[pygame.K_d] or key[pygame.K_RIGHT]:
           
-          player.sprite.revWalk()
+          player.sprite.revWalk(currentTime)
 
      if (key[pygame.K_SPACE] or key[pygame.K_UP] )and jumps:
           if (wisp_rect.colliderect(grass_rect) or  (velocity >= -4 and velocity <= 4)) or currentTime-startTime >= 16:
