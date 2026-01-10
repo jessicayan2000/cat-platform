@@ -16,9 +16,10 @@ class wisp(pygame.sprite.Sprite):
         self.rect.y = y
         self.t = 0
 
-     def update(self):
+     def update(self, startingTime, currentTime):
           self.t += 1
           images = list(self.images.values())
+          
           if self.walking:
                self.image = images[((self.t) % 4)]
     
