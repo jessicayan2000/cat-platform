@@ -24,7 +24,7 @@ class wisp(pygame.sprite.Sprite):
                self.image = images[((self.t) % 4)]
     
 
-     def revWalk(self, currentTime):
+     def revWalk(self, currentTime, startingTime):
           self.rect.x += 5
           self.walking = True
 
@@ -35,7 +35,7 @@ class wisp(pygame.sprite.Sprite):
           
 
      # this is for backwards walking animation
-     def walk(self, currentTime):
+     def walk(self, currentTime, startingTime):
           self.walking = True
           self.rect.x -= 5
      

@@ -47,12 +47,12 @@ pygame.display.set_caption('Hello World!')
      Wizard cat        
         
 '''
-wisp = pygame.image.load(
-    "images/walking/orange_cat1.png").convert_alpha()  # image of cat
-wisp = pygame.transform.scale(wisp, (50, 50))  # how big cat is
-wisp_rect = wisp.get_rect()  # this creates rectangle/hitbox around the cat
-wisp_rect.x = 200
-wisp_rect.y = 210
+#player = pygame.image.load(
+#    "images/walking/orange_cat1.png").convert_alpha()  # image of cat
+#player = pygame.transform.scale(player, (50, 50))  # how big cat is
+#player.sprite.rect = player.get_rect()  # this creates rectangle/hitbox around the cat
+#player.sprite.rect.x = 200
+#player.sprite.rect.y = 210
 
 
 
@@ -136,16 +136,26 @@ levels = [lv1(), lv2(), lv3()]
 def jump():
      global velocity, gravity,grass_rect, jumps
      velocity += gravity  # subtract velocity from gravity to slow down velocity
-     wisp_rect.y  -= velocity  # makes us go up by velocity
+     # player.sprite.rect.y  -= velocity  # makes us go up by velocity
      
+     # for platform in platform_list:
+     #      if player.sprite.rect.colliderect(platform) and velocity <= 0:
+     #           velocity = 0
+     #           velocity -= gravity
+     #           grass_rect.y = 250
+     #           jumps = 3
+     #           if player.sprite.rect.colliderect(grass_rect):
+     #                player.sprite.rect.y = 210
+
+     player.sprite.rect.y -= velocity
      for platform in platform_list:
-          if wisp_rect.colliderect(platform) and velocity <= 0:
-               velocity = 0
+          if player.sprite.rect.colliderect(platform) and velocity <= 0:
+               velocity = 0 
                velocity -= gravity
                grass_rect.y = 250
                jumps = 3
-               if wisp_rect.colliderect(grass_rect):
-                    wisp_rect.y = 210
+               if player.sprite.rect.collidererct(grass_rect):
+                    player.sprite.rect.y = 210 
      if velocity <= -30:
           velocity = -30
      
@@ -158,14 +168,14 @@ i = 0
 
 # this is for the walking animation of your character
 def revWalk():
-     global i, startingTime, wisp
+     global i, player
      currentTime = time.time()
      walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
-     wisp = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
+     player = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
      if i != 0:
-          wisp = pygame.transform.scale(wisp, (45, 45))
+          player = pygame.transform.scale(player, (45, 45))
      else:
-          wisp = pygame.transform.scale(wisp, (45, 45))
+          player = pygame.transform.scale(player, (45, 45))
 
      if currentTime - startingTime >= 0.2:
           i += 1
@@ -176,12 +186,12 @@ def revWalk():
 
 # this is for backwards walking animation
 def walk():
-     global i, startingTime, wisp
+     global i, player
      currentTime = time.time()
      walking = ["orange_cat4.png", "orange_cat1.png", "orange_cat2.png", "orange_cat3.png"]
-     wisp = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
-     wisp = pygame.transform.flip(wisp, True, False)
-     wisp = pygame.transform.scale(wisp, (45, 45))
+     player = pygame.image.load("images/walking/" + walking[i]).convert_alpha()
+     player = pygame.transform.flip(player, True, False)
+     player = pygame.transform.scale(player, (45, 45))
      
      if currentTime - startingTime >= 0.2:
           i += 1
@@ -207,38 +217,38 @@ while True:
      currentTime = time.time()
      
      # if you go to the right, then go to next level
-     if wisp_rect.x >= 370 and currentlevel < 3:
+     if player.sprite.rect.x >= 370 and currentlevel < 3:
           currentlevel += 1
-          wisp_rect.x = 0
+          player.sprite.rect.x = 0
      # if you go to the left, then go to the previous level
-     elif wisp_rect.x <= 0 and currentlevel > 1:
+     elif player.sprite.rect.x <= 0 and currentlevel > 1:
           currentlevel -= 1
-          wisp_rect.x = 370
+          player.sprite.rect.x = 370
 
      if currentlevel == 1:
           lv1()
-          if wisp_rect.x <= 0:
-               wisp_rect.x = 10
+          if player.sprite.rect.x <= 0:
+               player.sprite.rect.x = 10
      if currentlevel == 2:
           lv2()
      if currentlevel == 3:
           lv3()
-          if wisp_rect.x >=370:
-               wisp_rect.x = 360
+          if player.sprite.rect.x >=370:
+               player.sprite.rect.x = 360
 
      key = pygame.key.get_pressed()
      if key[pygame.K_a] or key[pygame.K_LEFT]:
           
-          player.sprite.walk(currentTime)
+          player.sprite.walk(currentTime, startingTime)
      if key[pygame.K_d] or key[pygame.K_RIGHT]:
           
-          player.sprite.revWalk(currentTime)
+          player.sprite.revWalk(currentTime, startingTime)
 
      if (key[pygame.K_SPACE] or key[pygame.K_UP] )and jumps:
-          if (wisp_rect.colliderect(grass_rect) or  (velocity >= -4 and velocity <= 4)) or currentTime-startTime >= 16:
+          if (player.sprite.rect.colliderect(grass_rect) or  (velocity >= -4 and velocity <= 4)) or currentTime-startTime >= 16:
                gravity = -2
                velocity = 30
-               wisp_rect.y -= 10
+               player.sprite.rect.y -= 10
                startTime = time.time()
                jumps-=1
                
@@ -248,14 +258,14 @@ while True:
                pygame.quit()
                sys.exit()
      
-     if wisp_rect.colliderect(enemy1.green_rect) and currentTime - healthTime >= 5:
+     if player.sprite.rect.colliderect(enemy1.green_rect) and currentTime - healthTime >= 5:
           health_bar1.change_health()
           healthTime = time.time() 
 
      screen.blit(tree, (0, 0))
      screen.blit(grass, grass_rect)
-     screen.blit(wisp, wisp_rect)
-     pygame.draw.rect(screen, "yellow", wisp_rect, 5)
+     screen.blit(player, player.sprite.rect)
+     pygame.draw.rect(screen, "yellow", player.sprite.rect, 5)
      
      health_bar1.update(screen) 
      
@@ -263,8 +273,8 @@ while True:
      for platform in range(len(platform_list) - 1):
           platform_list[platform].update(screen)
           pygame.draw.rect(screen, "yellow", platform_list[platform].rect, 5)
-          if wisp_rect.colliderect(platform_list[platform]) == True and velocity == 0 and (wisp_rect.colliderect(grass_rect) == False):
-               if wisp_rect.colliderect(platform_list[platform]) and pygame.sprite.spritecollide(wisp, platform_list[plaform], 0, collide_mask):
+          if player.sprite.rect.colliderect(platform_list[platform]) == True and velocity == 0 and (player.sprite.rect.colliderect(grass_rect) == False):
+               if player.sprite.rect.colliderect(platform_list[platform]) and pygame.sprite.spritecollide(player, platform_list[plaform], 0, collide_mask):
                     collide = True
                     print("hi")
                else:
@@ -272,10 +282,10 @@ while True:
      
      # updating enemies
      for enemies in enemies_list:
-          if enemies.update(screen, wisp_rect):
+          if enemies.update(screen, player.sprite.rect):
                hp -= 10
      
      player.draw(screen)
-     player.update()
+     player.update(startingTime,currentTime)
      clock.tick(15)
      pygame.display.update()
